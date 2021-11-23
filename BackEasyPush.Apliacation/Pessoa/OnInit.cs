@@ -169,5 +169,22 @@ namespace BackEasyPush.Apliacation.Pessoa
                 throw;
             }
         }
+
+
+
+
+        //  
+        //1 - git init
+        //2 - git remote add origin https://github.com/andradellos/Crud_Objeto_Dataset.git
+        //3 - git add .
+        //4 - git commit -m "first commit"
+
+        //5 -  =====Caso queira criar um bench ====
+        //git branch -M main 
+        //git push -u origin main
+
+
+        //6 - =====Caso NÂO queira criar um bench ====
+        //git push origin master
     }
 }
