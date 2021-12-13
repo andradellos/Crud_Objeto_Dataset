@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using static BackEasyPush.Infra.Data.AcessoBase;
-using static BackEasyPush.Infra.Data.Pessoas.ObjetoPessoa;
 
 namespace BackEasyPush.Infra.Data.Pessoa
 {

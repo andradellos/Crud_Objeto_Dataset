@@ -69,12 +69,13 @@ namespace BackEasyPush.Infra.Data
             }).ToList();
         }
 
-        public ParametrosProcedure ParametroProcedure(string NameParemeter, SqlDbType type, string Value)
+        public ParametrosProcedure ParametroProcedure(string NameParemeter, SqlDbType type, string value)
         {
-            return new ParametrosProcedure { NameParemeter = NameParemeter, Type = type, Value = Value };
+            return new ParametrosProcedure { NameParemeter = NameParemeter, Type = type, Value = value };
         }
 
-        public T CarregarObjeto<T>(DataSet dts, string ObjetoPrincipal, string carregaDados) where T : new()
+
+        public T CarregarObjeto<T>(DataSet dts, string ObjetoPrincipal) where T : new()
         {
             T classe = new T();
 
@@ -84,7 +85,7 @@ namespace BackEasyPush.Infra.Data
                 {
                     string tabela = table.Rows[0]["tabela"].ToString().Trim();
 
-                    if (tabela == ObjetoPrincipal && carregaDados == valor.Sim)
+                    if (tabela == ObjetoPrincipal)
                     {
                         classe = ConverterParaLista<T>(table).FirstOrDefault();
                     }
@@ -106,6 +107,27 @@ namespace BackEasyPush.Infra.Data
             }
             return classe;
         }
+
+
+        public List<T> CarregarListaDeObjeto<T>(DataSet dts, string ObjetoPrincipal) where T : new()
+        {
+            List<T> classe = new List<T>();
+
+            foreach (DataTable table in dts.Tables)
+            {
+                if (table.Rows.Count > 0)
+                {
+                    string tabela = table.Rows[0]["tabela"].ToString().Trim();
+
+                    if (tabela == ObjetoPrincipal)
+                    {
+                        classe = ConverterParaLista<T>(table);
+                    }
+                }
+            }
+            return classe;
+        }
+
 
         public List<T> CarregarListaDeObjeto<T>(DataSet dts, string ObjetoPrincipal, string carregaDados) where T : new()
         {
@@ -136,7 +158,6 @@ namespace BackEasyPush.Infra.Data
                 if (table.Rows.Count > 0)
                 {
                     classe = ConverterParaLista<T>(table);
-
                 }
             }
             return classe;

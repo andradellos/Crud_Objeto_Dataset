@@ -24,9 +24,9 @@ namespace BackEasyPush.Infra.Data.Pessoas
             DataSet dts = ConsultarBaseDeDados(IdPessoa);
 
             //Objeto principal deve ser sempre o primeiro a ser carregado a órdem das propriedades não importa.
-            pessoa = Base.CarregarObjeto<Domain.Pessoa>(dts, "Pessoa", CarregarDados.Pessoa);
-            pessoa.Contatos = Base.CarregarListaDeObjeto<Contato>(dts, "Contatos", CarregarDados.Contatos);
-            pessoa.Enderecos = Base.CarregarListaDeObjeto<Endereco>(dts, "Endereco", CarregarDados.Enderecos);
+            pessoa = Base.CarregarObjeto<Domain.Pessoa>(dts, "Pessoa");
+            pessoa.Contatos = Base.CarregarListaDeObjeto<Contato>(dts, "Contatos");
+            pessoa.Enderecos = Base.CarregarListaDeObjeto<Endereco>(dts, "Endereco");
 
             return pessoa;
         }
@@ -35,34 +35,19 @@ namespace BackEasyPush.Infra.Data.Pessoas
         {
             #region Parâmetros para a procedure
             List<ParametrosProcedure> ListaDeParametros = new List<ParametrosProcedure>();
+
+            // Caso não queira que traga dados de alguma tabela é só:
+            // Não adicionar o parâmetro da proceure.
+            // E se adicionar passe o value igual a valor.Nao.
             ListaDeParametros.Add(Base.ParametroProcedure("@IdPessoa", SqlDbType.Int, IdPessoa.ToString()));
-            ListaDeParametros.Add(Base.ParametroProcedure("@CarregaEndereco", SqlDbType.VarChar, CarregarDados.Enderecos));
-            ListaDeParametros.Add(Base.ParametroProcedure("@CarregaContatos", SqlDbType.VarChar, CarregarDados.Contatos));
-            ListaDeParametros.Add(Base.ParametroProcedure("@CarregaPessoa", SqlDbType.VarChar, CarregarDados.Pessoa));
+            ListaDeParametros.Add(Base.ParametroProcedure("@CarregaEndereco", SqlDbType.VarChar, valor.Sim));
+            ListaDeParametros.Add(Base.ParametroProcedure("@CarregaContatos", SqlDbType.VarChar, valor.Sim));
+            ListaDeParametros.Add(Base.ParametroProcedure("@CarregaPessoa", SqlDbType.VarChar, valor.Sim));
             #endregion
 
+            //Aprocedure é inteligente para trazer as tabelas de acordo com o parâmetro "@Carrega..." for Sim ou Não.
+           
             return Base.ExecuteProcedure("ObjetoPessoa", ListaDeParametros).Dataset;
         }
-
-        /// <summary>
-        /// Por default as propriedades não serão carregadas com dados. Antes de chamar o método carregar, necessário configurar alguma propriedade para trazer.
-        /// Ex. CarregarDados.Pessoa = valor.Sim; ou CarregarDados.Geral();
-        /// </summary>
-        public static class CarregarDados
-        {
-            public static string Pessoa { get; set; } = valor.Nao;
-            public static string Enderecos { get; set; } = valor.Nao;
-            public static string Contatos { get; set; } = valor.Nao;
-
-            /// <summary>
-            /// Configura para valor.Sim e Carregando dados de todas as propriedades do objeto em questão
-            /// </summary>
-            public static void Geral()
-            {
-                Pessoa = valor.Sim;
-                Enderecos = valor.Sim;
-                Contatos = valor.Sim;
-            }
-        }        
     }
 }

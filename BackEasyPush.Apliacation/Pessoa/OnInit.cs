@@ -21,13 +21,7 @@ namespace BackEasyPush.Apliacation.Pessoa
             {
                 Domain.Pessoa pessoa = new Domain.Pessoa();
 
-                //Por default as propriedades não serão carregadas caso necessite configure como está abaixo
-                CarregarDados.Enderecos = valor.Sim;
-                CarregarDados.Pessoa = valor.Sim;
-                CarregarDados.Contatos = valor.Sim;
-                //CarregarDados.Geral();
-
-                pessoa = pessoaData.Carregar(3);
+                pessoa = pessoaData.Carregar(2);
                 int _cidade = pessoa?.Enderecos.Count > 0 ? pessoa.Enderecos[0].IdCidade : 0;
 
                 string _numero = pessoa?.Contatos.Count > 0 ? pessoa?.Contatos?[0]?.Numero : string.Empty;

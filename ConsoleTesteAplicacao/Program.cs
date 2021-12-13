@@ -15,10 +15,10 @@ namespace ConsoleTesteAplicacao
 
 
 
-            _TesteAcessoDados.InsertContato();
-            _TesteAcessoDados.UpDateContato();
+           // _TesteAcessoDados.InsertContato();
+            ////_TesteAcessoDados.UpDateContato();
 
-            _TesteAcessoDados.SelectContatosGeral();
+            //_TesteAcessoDados.SelectContatosGeral();
            // _TesteAcessoDados.Insert();
            // _TesteAcessoDados.UpDate();
            // _TesteAcessoDados.Select();
